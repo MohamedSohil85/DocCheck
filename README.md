@@ -22,8 +22,8 @@ By combining AI-driven search with a robust backend, **DocCheck** empowers healt
 ## 📦 Tech Stack
 
 - **Java**, **Spring Boot**
-- **Llama3.2 (Ollama Model) / ML integration** for intelligent search
-- **PostgreSQL 
+- **Llama3.2 (Ollama Model) ** for intelligent search
+- **PostgreSQL** 
 - **Docker** for containerization
 - **Swagger** for API documentation
 
