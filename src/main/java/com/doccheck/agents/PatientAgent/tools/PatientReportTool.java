@@ -1,11 +1,15 @@
 package com.doccheck.agents.PatientAgent.tools;
 
+import com.doccheck.agents.PatientAgent.entity.LabResults;
 import com.doccheck.agents.PatientAgent.entity.PatientReport;
 import com.doccheck.agents.PatientAgent.persistence.PatientReportRepository;
 import dev.langchain4j.agent.tool.P;
 import dev.langchain4j.agent.tool.Tool;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Component
 public class PatientReportTool {
@@ -22,6 +26,15 @@ public class PatientReportTool {
     }
 
     // find Patient by Name and date of Birth
+    @Tool("find Patient by his Name and his Date of Birth")
+    public PatientReport findPatient(@P("get Patient By his Name")String name, @P("get Patient by his Date of Birth")LocalDate dateOfBirth){
+        return patientReportRepository.findPatientReportByPatientNameEqualsIgnoreCaseAndDateOfBirth(name, dateOfBirth).orElseThrow(()-> new ResourceNotFoundException("Patient with Name :"+name+" not found"));
+    }
 
     //find lab Result of Patient by Name
+
+    @Tool("get Results of Lab by Patient Name ")
+    public List findLabResult(@P("find Result of Labs By Name of Patient")String name){
+        return patientReportRepository.findAll().stream().filter(patientReport -> patientReport.getPatientName().equalsIgnoreCase(name)).map(PatientReport::getLabResults).toList();
+    }
 }
